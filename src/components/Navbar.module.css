@@ -1,0 +1,194 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+  height: 64px;
+  transition: background 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+.nav.scrolled {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+/* Desktop nav links */
+.links {
+  display: flex;
+  gap: 36px;
+}
+
+.link {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.76);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 4px 0;
+  position: relative;
+  transition: color 0.2s;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--white);
+  transition: width 0.3s ease;
+}
+
+.link:hover {
+  color: var(--white);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+/* Resume button — shared base */
+.resumeBtn {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.5);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 100px;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.resumeBtn:hover {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+/* ── Hamburger ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 110;
+  width: 40px;
+  height: 40px;
+}
+
+.hamburger span {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  background: var(--white);
+  transition: transform 0.35s cubic-bezier(.22,1,.36,1), opacity 0.25s ease;
+  transform-origin: center;
+}
+
+/* Animate into X */
+.hamburger.hamburgerOpen span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+}
+.hamburger.hamburgerOpen span:nth-child(2) {
+  opacity: 0;
+  transform: scaleX(0);
+}
+.hamburger.hamburgerOpen span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+}
+
+/* ── Mobile drawer ── */
+.drawer {
+  position: fixed;
+  top: 64px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.96);
+  backdrop-filter: blur(16px);
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 0.4s cubic-bezier(.22,1,.36,1), opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.drawer.drawerOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.drawerLinks {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+}
+
+.drawerLink {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.76);
+  font-family: 'Inter', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.drawerLink:hover {
+  color: var(--white);
+}
+
+/* Backdrop — optional extra click-to-close area */
+.backdrop {
+  display: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 768px) {
+  .nav {
+    padding: 0 20px;
+  }
+
+  /* Hide desktop links and resume button */
+  .links {
+    display: none;
+  }
+
+  .resumeBtnDesktop {
+    display: none;
+  }
+
+  /* Show hamburger */
+  .hamburger {
+    display: flex;
+  }
+}

@@ -1,0 +1,102 @@
+/* ===== GLOBAL RESET & TOKENS ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --black: #000000;
+  --white: #ffffff;
+  --grey-300: #999999;
+  --grey-500: #555555;
+  --grey-700: #222222;
+  --grey-900: #0a0a0a;
+
+  /* Fluid layout tokens */
+  --content-width: min(1100px, 92vw);
+  --section-pad-y: clamp(60px, 10vw, 120px);
+  --section-pad-x: clamp(20px, 5vw, 40px);
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 21px;
+}
+
+body {
+  background-color: var(--black);
+  color: var(--white);
+  font-family: 'Inter', sans-serif;
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-x: hidden;
+  /* Only hide cursor on pointer devices (mouse) — not on touch */
+  cursor: auto;
+}
+
+/* Only apply custom cursor on mouse/trackpad devices */
+@media (pointer: fine) {
+  body {
+    cursor: none;
+  }
+  a, button, [role="button"] {
+    cursor: none;
+  }
+}
+
+/* ── Custom Cursor ── */
+.cursor {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: var(--white);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.2s, height 0.2s;
+}
+
+.cursor-ring {
+  position: fixed;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(255,255,255,0.45);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s, height 0.3s;
+}
+
+/* ── Particles ── */
+#particles-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.6;
+}
+
+/* Reduce particle opacity on mobile for performance */
+@media (max-width: 768px) {
+  #particles-canvas {
+    opacity: 0.3;
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 3px; }
+::-webkit-scrollbar-track  { background: var(--black); }
+::-webkit-scrollbar-thumb  { background: #333; border-radius: 2px; }
+
+/* ── Selection ── */
+::selection { background: var(--white); color: var(--black); }
+
+/* ── Section divider ── */
+section + section {
+  border-top: 1px solid rgba(255,255,255,0.05);
+}

@@ -1,0 +1,122 @@
+.about {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: var(--black);
+}
+
+.inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.inner.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sectionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 10vw, 120px);
+  color: rgba(255,255,255,0.61);
+  letter-spacing: 0.02em;
+  margin-bottom: 28px;
+  line-height: 1;
+  text-align: center;
+}
+
+/* ── Word-by-word bio ── */
+.bio {
+  font-size: clamp(0.85rem, 2vw, 1.08rem);
+  line-height: 1.9;
+  margin: 0 auto 60px;
+  max-width: 640px;
+  text-align: center;
+}
+
+.word {
+  display: inline;
+  color: rgba(255,255,255,0.1);
+  font-weight: 300;
+  transition: color 0.4s ease;
+  white-space: pre-wrap;
+}
+
+.word.wordLit {
+  color: rgba(255,255,255,0.84);
+}
+
+.word.wordLit.wordHighlight {
+  color: var(--white);
+  font-weight: 600;
+}
+
+.word.wordLit.wordDim {
+  color: rgba(255,255,255,0.58);
+}
+
+/* ── Skill groups ── */
+.skillsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.skillGroup {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.skillGroup.skillVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.skillLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.36);
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.pill {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 100px;
+  padding: 8px 18px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.76);
+  transition: border-color 0.3s, color 0.3s, background 0.3s, transform 0.3s;
+}
+
+.pill:hover {
+  border-color: var(--white);
+  color: var(--black);
+  background: var(--white);
+}
+
+@media (max-width: 768px) {
+  .about { padding: 80px 24px; }
+  .bio { font-size: 0.95rem; }
+  .pill { padding: 7px 14px; font-size: 0.78rem; }
+}
+
+@media (max-width: 480px) {
+  .about { padding: 60px 20px; }
+  .skillLabel { font-size: 0.62rem; letter-spacing: 0.14em; }
+}

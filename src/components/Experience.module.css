@@ -1,0 +1,127 @@
+.experience {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: var(--black);
+}
+
+.titleWrap {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.sectionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(48px, 12vw, 160px);
+  color: rgba(255,255,255,0.06);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: color 1s ease;
+}
+
+.sectionTitle.titleVisible {
+  color: rgba(255,255,255,0.61);
+}
+
+.cards {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card {
+  display: flex;
+  gap: 40px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 20px;
+  padding: 36px;
+  background: rgba(255,255,255,0.02);
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.75s cubic-bezier(.22,1,.36,1),
+              transform 0.75s cubic-bezier(.22,1,.36,1),
+              border-color 0.3s ease,
+              background 0.3s ease,
+              box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  border-color: rgba(255,255,255,0.7);
+  background: rgba(255,255,255,0.05);
+  box-shadow: 0 0 0 1px rgba(255,255,255,0.08), 0 8px 32px rgba(255,255,255,0.04);
+}
+
+.left {
+  flex-shrink: 0;
+  width: 130px;
+}
+
+.period {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.46);
+  margin-bottom: 6px;
+}
+
+.type {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.28);
+}
+
+.role {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.04em;
+  color: var(--white);
+  margin-bottom: 4px;
+}
+
+.company {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.46);
+  margin-bottom: 16px;
+}
+
+.points {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.points li {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: rgba(255,255,255,0.58);
+  padding-left: 16px;
+  position: relative;
+}
+
+.points li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: rgba(255,255,255,0.24);
+}
+
+@media (max-width: 768px) {
+  .experience { padding: 80px 24px; }
+  .card { flex-direction: column; gap: 16px; padding: 28px; }
+  .left { width: auto; }
+}
+
+@media (max-width: 480px) {
+  .experience { padding: 60px 20px; }
+  .card { padding: 20px; border-radius: 16px; }
+  .role { font-size: 1.2rem; }
+  .points li { font-size: 0.8rem; }
+}

@@ -1,0 +1,303 @@
+.contact {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) var(--section-pad-x) calc(var(--section-pad-y) - 40px);
+  background: var(--black);
+}
+
+.inner {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+
+.inner.visible { opacity: 1; transform: translateY(0); }
+
+.sectionTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(44px, 10vw, 130px);
+  color: rgba(255,255,255,0.61);
+  letter-spacing: 0.02em;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.sub {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.34);
+  margin-bottom: 48px;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 28px 32px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.02);
+  min-height: 130px;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s cubic-bezier(.22,1,.36,1),
+              transform 0.7s cubic-bezier(.22,1,.36,1),
+              border-color 0.3s,
+              background 0.3s;
+}
+
+.card.cardVisible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.card:hover {
+  border-color: rgba(255,255,255,0.32);
+  background: rgba(255,255,255,0.05);
+}
+
+.cardTop {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.iconWrap {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon {
+  color: rgba(255,255,255,0.61);
+}
+
+.arrow {
+  color: rgba(255,255,255,0.28);
+  font-size: 1rem;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.card:hover .arrow {
+  color: var(--white);
+  transform: translate(3px, -3px);
+}
+
+.channelLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.34);
+  margin-bottom: 6px;
+}
+
+.channelValue {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--white);
+  word-break: break-all;
+}
+
+/* ── Form ── */
+.formBox {
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 64px 24px;
+  background: rgba(255,255,255,0.03);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  transition: transform 0.5s cubic-bezier(.22,1,.36,1), border-color 0.4s, box-shadow 0.4s;
+  will-change: transform;
+}
+
+.formBox:hover,
+.formBox:focus-within {
+  border-color: rgba(255,255,255,0.6);
+  box-shadow: 0 0 30px rgba(255,255,255,0.06), 0 0 60px rgba(255,255,255,0.03);
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.formLabel {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.61);
+  text-transform: uppercase;
+}
+
+.formInput,
+.formTextarea {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.96);
+  outline: none;
+  transition: border-color 0.3s, background 0.3s;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.formInput::placeholder,
+.formTextarea::placeholder {
+  color: rgba(255,255,255,0.31);
+}
+
+.formInput:focus,
+.formTextarea:focus {
+  border-color: rgba(255,255,255,0.32);
+  background: rgba(255,255,255,0.06);
+}
+
+.formInputError {
+  border-color: rgba(220,80,80,0.5) !important;
+}
+
+.formTextarea {
+  resize: none;
+  height: 130px;
+  min-height: unset;
+  line-height: 1.7;
+}
+
+.formError {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.6rem;
+  color: rgba(220,80,80,0.7);
+  margin-bottom: 12px;
+  letter-spacing: 0.1em;
+}
+
+.fieldError {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.52rem;
+  letter-spacing: 0.1em;
+  color: rgba(220,80,80,0.8);
+  margin-top: 2px;
+}
+
+/* ── Send button ── */
+.sendBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  padding: 18px;
+  margin-top: auto;
+  background: none;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 100px;
+  color: rgba(255,255,255,0.76);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+.sendBtn:hover {
+  background: var(--white);
+  color: var(--black);
+  border-color: var(--white);
+}
+
+.sendBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Success state ── */
+.successWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px;
+  gap: 10px;
+}
+
+.successIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: rgba(255,255,255,0.66);
+  margin-bottom: 8px;
+}
+
+.successTitle {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: rgba(255,255,255,0.61);
+  letter-spacing: 0.04em;
+}
+
+.successSub {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: rgba(255,255,255,0.34);
+}
+
+/* ── Split layout ── */
+.splitLayout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.leftCol, .rightCol {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .splitLayout {
+    grid-template-columns: 1fr;
+  }
+  .card { min-height: auto; }
+  .formBox { padding: 28px 20px; }
+}
+
+@media (max-width: 480px) {
+  .contact { padding: 60px 20px; }
+  .card { padding: 20px 22px; border-radius: 16px; }
+  .channelValue { font-size: 0.82rem; }
+  .formBox { padding: 22px 16px; border-radius: 16px; }
+  .formInput, .formTextarea { font-size: 0.78rem; padding: 12px 14px; }
+  .sendBtn { padding: 15px; font-size: 0.65rem; }
+}
