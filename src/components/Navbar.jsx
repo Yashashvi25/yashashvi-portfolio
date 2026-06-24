@@ -13,7 +13,6 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close menu on resize to desktop
   useEffect(() => {
     const onResize = () => {
       if (window.innerWidth > 768) setMenuOpen(false)
@@ -22,7 +21,6 @@ export default function Navbar() {
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
@@ -51,7 +49,6 @@ export default function Navbar() {
   return (
     <>
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`}>
-        {/* Desktop links */}
         <div className={styles.links}>
           {links.map(l => (
             <button
@@ -66,9 +63,8 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop resume button */}
         <a
-          href="/resume.pdf"
+          href="./resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className={styles.resumeBtn}
@@ -78,7 +74,6 @@ export default function Navbar() {
           VIEW RESUME
         </a>
 
-        {/* Hamburger button — mobile only */}
         <button
           className={`${styles.hamburger} ${menuOpen ? styles.hamburgerOpen : ''}`}
           onClick={() => setMenuOpen(o => !o)}
@@ -91,7 +86,6 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile drawer */}
       <div className={`${styles.drawer} ${menuOpen ? styles.drawerOpen : ''}`}>
         <div className={styles.drawerLinks}>
           {links.map(l => (
@@ -103,8 +97,9 @@ export default function Navbar() {
               {l}
             </button>
           ))}
+          
           <a
-            href="/resume.pdf"
+            href="./resume.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.resumeBtn}
@@ -115,7 +110,6 @@ export default function Navbar() {
         </div>
       </div>
 
-      {/* Backdrop */}
       {menuOpen && (
         <div className={styles.backdrop} onClick={() => setMenuOpen(false)} />
       )}
