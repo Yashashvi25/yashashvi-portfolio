@@ -6,81 +6,107 @@ export default function Particles() {
   useEffect(() => {
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
-    let W = canvas.width = window.innerWidth
-    let H = canvas.height = window.innerHeight
+
+    let W = 0
+    let H = 0
+    let stars = []
     let animId
-    let mouse = { x: W / 2, y: H / 2 }
+    let mouse = { x: -9999, y: -9999 }
+
+    const makeStars = () => {
+      const count = Math.min(350, Math.floor((W * H) / 5000))
+      stars = Array.from({ length: count }, () => {
+        const x = Math.random() * W
+        const y = Math.random() * H
+        return {
+          baseX: x,
+          baseY: y,
+          r: Math.random() * 1.4 + 0.4,
+          baseAlpha: Math.random() * 0.45 + 0.35,
+          twinkleSpeed: 0.004 + Math.random() * 0.015,
+          phase: Math.random() * Math.PI * 2,
+          driftX: (Math.random() - 0.5) * 0.04,
+          driftY: (Math.random() - 0.5) * 0.04,
+        }
+      })
+    }
+
+    const sizeCanvas = () => {
+      W = window.innerWidth
+      H = window.innerHeight
+      canvas.width = W
+      canvas.height = H
+      makeStars() // fresh star field matching the new size — avoids any stale-coordinate seam
+    }
+    sizeCanvas()
 
     const onMouse = (e) => { mouse.x = e.clientX; mouse.y = e.clientY }
+    const onLeave = () => { mouse.x = -9999; mouse.y = -9999 }
     window.addEventListener('mousemove', onMouse)
-
-    const particles = Array.from({ length: 110 }, () => ({
-      x: Math.random() * W,
-      y: Math.random() * H,
-      r: Math.random() * 1.8 + 0.2,
-      dx: (Math.random() - 0.5) * 0.25,
-      dy: (Math.random() - 0.5) * 0.25,
-      alpha: Math.random() * 0.45 + 0.08,
-      pulse: Math.random() * Math.PI * 2,
-      speed: 0.008 + Math.random() * 0.012,
-    }))
+    window.addEventListener('mouseleave', onLeave)
 
     const draw = () => {
       ctx.clearRect(0, 0, W, H)
 
-      particles.forEach(p => {
-        p.pulse += p.speed
-        const a = p.alpha * (0.6 + 0.4 * Math.sin(p.pulse))
+      stars.forEach(s => {
+        s.phase += s.twinkleSpeed
+        const twinkle = 0.5 + 0.5 * Math.sin(s.phase)
+        const alpha = s.baseAlpha * (0.4 + 0.6 * twinkle)
 
-        // Subtle mouse repulsion
-        const dist = Math.hypot(p.x - mouse.x, p.y - mouse.y)
-        if (dist < 120) {
-          const angle = Math.atan2(p.y - mouse.y, p.x - mouse.x)
-          p.x += Math.cos(angle) * 0.4
-          p.y += Math.sin(angle) * 0.4
+        s.baseX += s.driftX
+        s.baseY += s.driftY
+        if (s.baseX < 0) s.baseX = W
+        if (s.baseX > W) s.baseX = 0
+        if (s.baseY < 0) s.baseY = H
+        if (s.baseY > H) s.baseY = 0
+
+        const dx = s.baseX - mouse.x
+        const dy = s.baseY - mouse.y
+        const dist = Math.hypot(dx, dy)
+        const REPEL_RADIUS = 140
+        let drawX = s.baseX
+        let drawY = s.baseY
+        if (dist < REPEL_RADIUS) {
+          const force = (1 - dist / REPEL_RADIUS) * 30
+          const angle = Math.atan2(dy, dx)
+          drawX += Math.cos(angle) * force
+          drawY += Math.sin(angle) * force
+        }
+
+        if (s.r > 1) {
+          const glow = ctx.createRadialGradient(drawX, drawY, 0, drawX, drawY, s.r * 4)
+          glow.addColorStop(0, `rgba(255,255,255,${alpha * 0.5})`)
+          glow.addColorStop(1, 'rgba(255,255,255,0)')
+          ctx.fillStyle = glow
+          ctx.beginPath()
+          ctx.arc(drawX, drawY, s.r * 4, 0, Math.PI * 2)
+          ctx.fill()
         }
 
         ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2)
-        ctx.fillStyle = `rgba(255,255,255,${a})`
+        ctx.arc(drawX, drawY, s.r, 0, Math.PI * 2)
+        ctx.fillStyle = `rgba(255,255,255,${alpha})`
         ctx.fill()
-
-        p.x += p.dx
-        p.y += p.dy
-        if (p.x < 0 || p.x > W) p.dx *= -1
-        if (p.y < 0 || p.y > H) p.dy *= -1
       })
-
-      // Draw faint connection lines between close particles
-      for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-          const d = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y)
-          if (d < 100) {
-            ctx.beginPath()
-            ctx.moveTo(particles[i].x, particles[i].y)
-            ctx.lineTo(particles[j].x, particles[j].y)
-            ctx.strokeStyle = `rgba(255,255,255,${0.06 * (1 - d / 100)})`
-            ctx.lineWidth = 0.5
-            ctx.stroke()
-          }
-        }
-      }
 
       animId = requestAnimationFrame(draw)
     }
 
     draw()
 
+    let resizeTimer
     const onResize = () => {
-      W = canvas.width = window.innerWidth
-      H = canvas.height = window.innerHeight
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(sizeCanvas, 150)
     }
     window.addEventListener('resize', onResize)
 
     return () => {
       cancelAnimationFrame(animId)
+      clearTimeout(resizeTimer)
       window.removeEventListener('resize', onResize)
       window.removeEventListener('mousemove', onMouse)
+      window.removeEventListener('mouseleave', onLeave)
     }
   }, [])
 

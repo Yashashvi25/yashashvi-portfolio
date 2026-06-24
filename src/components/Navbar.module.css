@@ -187,8 +187,14 @@
     display: none;
   }
 
-  /* Show hamburger */
-  .hamburger {
-    display: flex;
-  }
+ /* Show hamburger */
+.hamburger {
+  display: flex;
+  order: 1;
+}
+
+/* Push resume button to the right */
+.resumeBtn {
+  order: 2;
+}
 }
